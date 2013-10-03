@@ -59,9 +59,32 @@ class Product extends Base
      * @return reference
      */
     public function addRecipientOption($option){
+
+        // strip out prices on option and any choices
+        $option = $this->removePrice($option);
+
         return $this->addOption('recipient', $option);
     }
 
+    private function removePrice($option) {
+
+        if (isset($option->price)) {
+
+            if ($option->price != 0) {
+                trigger_error("removing non-zero price ($option->price) from recipient option ($option->id)", E_USER_WARNING);
+            }
+
+            unset($option->price);
+        }
+
+        if (isset($option->choices)) {
+            foreach ($option->choices as $choice) {
+                $this->removePrice($choice);
+            }
+        }
+
+        return $option;
+    }
 
     private function addOption($type, $option){
         if (is_array($option)){
@@ -173,7 +196,7 @@ class Product extends Base
         $crypt      = \GiveIt\SDK\Crypt::getInstance();
 
         if ($parent == false) {
-            $this->addError("GiveIt SDK must be instantiated to render buttons");
+            $this->addError("SDK must be instantiated to render buttons");
             return false;
         }
 
@@ -192,7 +215,7 @@ class Product extends Base
 
         // $encrypted  = urlencode($encrypted);
 
-        $html = "<span class='giveit-button' data-giveit-buttontype='$buttonType' data-giveit-api-key='$parent->publicKey' data-giveit-data='$encrypted'></span>";
+        $html = "<span class='giveit-button' data-giveit-buttontype='$buttonType' data-giveit-data='$encrypted'></span>";
 
         return $html;
     }

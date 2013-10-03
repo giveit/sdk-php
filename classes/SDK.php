@@ -15,7 +15,7 @@ namespace GiveIt;
 
 class SDK extends SDK\Base
 {
-    const   VERSION          = '1.1.0';
+    const   VERSION          = '1.1.3';
 
     public  $dataKey         = null;
     public  $publicKey       = null;
@@ -132,8 +132,9 @@ class SDK extends SDK\Base
 
     public function getButtonJS()
     {
-        $template = file_get_contents(__DIR__ . '/../templates/widget.js');
-        $text     = str_replace('$widgetUrl', $this->urls[$this->environment]['widget'], $template);
+        $text = file_get_contents(__DIR__ . '/../templates/widget.js');
+        $text = str_replace('$widgetUrl', $this->urls[$this->environment]['widget'], $text);
+        $text = str_replace('$public_api_key', $this->publicKey, $text);
 
         return $text;
     }
