@@ -45,7 +45,16 @@ class Product extends Base
 
         return $this;
     }
-
+    
+    public function setCurrency($iso_code = 'USD'){
+        if (strlen($iso_code) == 3){
+            $this->data['currency'] = $iso_code;    
+        } else {
+            $this->addError("invalid currency $iso_code. Currency should be a 3-letter ISO code");
+        }
+        
+    }
+    
     /**
      * Add an option for the buyer
      * @return reference
