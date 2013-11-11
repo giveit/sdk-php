@@ -2,7 +2,7 @@
 
 require_once 'init.php';
 
-$giveIt->debug = true;
+//$giveIt->debug = true;
 $giveIt->setEnvironment('sandbox');
 
 $result = $giveIt->verifyKeys();
