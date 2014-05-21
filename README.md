@@ -55,15 +55,14 @@ create the product
     //We should validate this product
     $result = $product->validate();
     
-    // is it valid, echo the button; if it is not, display the errors
-    if ($result == true){
-        $htmlFromProduct    = $product->getButtonHTML();
-        echo $htmlFromProduct;
-    }
-    else {
-        $errorsHTML = $product->getErrorsHTML();
-        echo $errorsHTML;
-    }
+    // create the button
+    $button = new \GiveIt\SDK\Button(array('product' => $product));
+    $button->type = 'green_rect_sm';
+    $button->language = 'nl-NL';
+
+    // render the button
+    $buttonHTML = $button->getHTML();
+    echo $buttonHTML;
     
     // finally, now also include giveit.js so the button actually works
     $giveIt->outputButtonJS();
