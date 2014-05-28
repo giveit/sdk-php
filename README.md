@@ -57,7 +57,7 @@ create the product
     
     // create the button
     $button = new \GiveIt\SDK\Button(array('product' => $product));
-    $button->type = 'green_rect_sm';
+    $button->type = 'white_sm';
     $button->language = 'nl-NL';
 
     // render the button
